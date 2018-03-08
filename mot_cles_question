@@ -1,0 +1,20 @@
+Tuiles disponibles : [violet-5-suspect, noir-6-suspect, gris-7-suspect, bleu-2-suspect] choisir entre 0 et 3
+MC : tuiles
+
+Voulez-vous activer le pouvoir (0/1) ?
+MC : pouvoir
+
+Quelle salle bloquer ? (0-9)
+MC : bloquer
+
+Quelle sortie ? Chosir parmi : {2, 7}
+MC : sortie
+
+positions disponibles : {1}, choisir la valeur
+MC : positions
+
+Avec quelle couleur échanger (pas violet!) ?
+MC : echanger
+
+Quelle salle obscurcir ? (0-9)
+MC : obscurcir
