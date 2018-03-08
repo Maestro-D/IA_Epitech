@@ -5,13 +5,6 @@ couleurs = avant | permanents | apres | deux
 passages = [{1,4},{0,2},{1,3},{2,7},{0,5,8},{4,6},{5,7},{3,6,9},{4,9},{7,8}]
 pass_ext = [{1,4},{0,2,5,7},{1,3,6},{2,7},{0,5,8,9},{4,6,1,8},{5,7,2,9},{3,6,9,1},{4,9,5},{7,8,4,6}]
 
-class personnage:
-    def __init__(self,couleur):
-        self.couleur, self.suspect, self.position, self.pouvoir = couleur, True, 0, True
-    def __repr__(self):
-        susp = "-suspect" if self.suspect else "-clean"
-        return self.couleur + "-" + str(self.position) + susp
-
 class joueur:
     def __init__(self,n):
         self.numero = n
@@ -95,72 +88,11 @@ class joueur:
                 q.position = x
                 informer("NOUVEAU PLACEMENT : "+str(q))
 
-class partie:
-    def __init__(self,joueurs):
-        for i in [0,1]:
-            f = open("./" + str(i) + "/infos.txt","w")
-            f.close()
-            f = open("./" + str(i) + "/questions.txt","w")
-            f.close()
-            f = open("./" + str(i) + "/reponses.txt","w")
-            f.close()
-        self.joueurs = joueurs
-        self.start, self.end, self.num_tour, self.shadow, x = 4, 22, 1, randrange(10), randrange(10)
-        self.bloque = {x,passages[x].copy().pop()}
-        self.personnages = {personnage(c) for c in couleurs}
-        self.tuiles = [p for p in self.personnages]
-        self.cartes = self.tuiles[:]
-        self.fantome = self.cartes[randrange(8)]
-        message("!!! Le fantôme est : "+self.fantome.couleur,[self.joueurs[1]])
-        self.cartes.remove(self.fantome)
-        self.cartes += ['fantome']*3
-        
-        shuffle(self.tuiles)
-        shuffle(self.cartes)
-        for i,p in enumerate(self.tuiles):
-            p.position = i
-    def actions(self):
-        joueur_actif = self.num_tour % 2
-        if joueur_actif == 1:
-            shuffle(self.tuiles)
-            self.tuiles_actives = self.tuiles[:4]
-        else:
-            self.tuiles_actives = self.tuiles[4:]
-        for i in [joueur_actif,1-joueur_actif,1-joueur_actif,joueur_actif]:
-            self.joueurs[i].jouer(self)
-    def lumiere(self):
-        partition = [{p for p in self.personnages if p.position == i} for i in range(10)]
-        if len(partition[self.fantome.position]) == 1 or self.fantome.position == self.shadow:
-            informer("le fantome frappe")
-            self.start += 1
-            for piece,gens in enumerate(partition):
-                if len(gens) > 1 and piece != self.shadow:
-                    for p in gens:
-                        p.suspect = False
-        else:
-            informer("pas de cri")
-            for piece,gens in enumerate(partition):
-                if len(gens) == 1 or piece == self.shadow:
-                    for p in gens:
-                        p.suspect = False
-        self.start += len([p for p in self.personnages if p.suspect])
-    def tour(self):
-        informer("**************************\n" + str(self))
-        self.actions()
-        self.lumiere()
-        for p in self.personnages:
-            p.pouvoir = True
-        self.num_tour += 1
-    def lancer(self):
-        while self.start < self.end and len([p for p in self.personnages if p.suspect]) > 1:
-            self.tour()
-        informer("L'enquêteur a trouvé - c'était " + str(self.fantome) if self.start < self.end else "Le fantôme a gagné")
-        informer("Score final : "+str(self.end-self.start))
-    def __repr__(self):
-        return "Tour:" + str(self.num_tour) + ", Score:"+str(self.start)+"/"+str(self.end) + ", Ombre:" + str(self.shadow) + ", Bloque:" + str(self.bloque) +"\n" + "  ".join([str(p) for p in self.personnages])
+def ia_main():
+    writeRep(randrange(6))
 
-def writeRep(reponse)
-    rf = open('./0/reponses.txt','w')
+def writeRep(reponse):
+    rf = open('./1/reponses.txt','w')
     rf.write(str(reponse))
     rf.close()
 
@@ -168,15 +100,14 @@ def lancer():
     fini = False
     old_question = ""
     while not fini:
-        qf = open('./0/questions.txt','r')
+        qf = open('./1/questions.txt','r')
         question = qf.read()
         qf.close()
         if question != old_question :
-            MAIN_IA
+            ia_main()
             old_question = question
-        infof = open('./0/infos.txt','r')
+        infof = open('./1/infos.txt','r')
         lines = infof.readlines()
         infof.close()
         if len(lines) > 0:
             fini = "Score final" in lines[-1]
-    print("partie finie")
