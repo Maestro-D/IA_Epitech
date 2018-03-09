@@ -99,7 +99,7 @@ def writeRep(reponse):
 
 def lancer():
     fini = False
-    parser = p.parser()
+    parser = p.parser(1)
     old_question = ""
     while not fini:
         qf = open('./1/questions.txt','r')
