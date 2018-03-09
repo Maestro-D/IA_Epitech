@@ -1,4 +1,5 @@
 from random import shuffle,randrange
+import parser as p
 from time import sleep
 import parser as p
 
@@ -28,6 +29,7 @@ def lancer():
     fini = False
     parser = p.parser()
     old_question = ""
+    parser = p.parse()
     while not fini:
         qf = open('./0/questions.txt','r')
         question = qf.read()
