@@ -1,7 +1,7 @@
 from random import shuffle,randrange
 from time import sleep
 from threading import Thread
-import inspecteur, ia_base
+import inspecteur, fantome
 
 latence = 0.01
 permanents, deux, avant, apres = {'rose'}, {'rouge','gris','bleu'}, {'violet','marron'}, {'noir','blanc'}
@@ -187,5 +187,5 @@ class partie:
 
 joueurs = [joueur(0),joueur(1)]
 Thread(target=inspecteur.lancer).start()
-Thread(target=ia_base.lancer).start()
+Thread(target=fantome.lancer).start()
 partie(joueurs).lancer()
