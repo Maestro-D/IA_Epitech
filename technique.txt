@@ -1,0 +1,29 @@
+1) Approche pas arbre décision
+	jeu simple
+1.1) worse-case
+1.2) probabilité
+1.3) avec apprentissage
+*** problème : compléxité
+
+2) Pruning
+2.1) scoring direct
+2.2) méthodes récursives
+2.3) monté-carlo
+
+3)Modélisation statistique
+3.1) identifier les variables
+3.2) optimiser les variables
+3.3) apprentissage non paramétrique
+
+4) Le problème de l'adversité
+4.1) par d'option global
+4.2) pas d'échantillon ou de modèle général
+4.3) surapprentissage  contre un adversaire
+
+explore l'arbre -> score situation -----> que faire l'adversaire ? ____________
+					| carlotta 												   |
+					| situation positionnement (explo statistique)  		   | MAX MIN MAX : max 1er coup, min 2eme coup, max 3eme coup (idealement appliqué si fantome grillé)
+					| 	reduis le nombre de pronfondeur						   | MAX MOY MAX : proba
+					|														   | MACHINE LEARNING : Etablir une stat pour savoir si le fantome est grillé:
+																			   |
+																			   |
