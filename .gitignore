@@ -1,6 +1,7 @@
 
 *.pyc
-*.txt
+/0/*.txt
+/1/*.txt
 /.idea/*.iml
 /.idea/*.xml
 /.vscode/settings.json
