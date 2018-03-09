@@ -19,7 +19,6 @@ class parser:
         self.tuiles_dispo = []
 
     def parseQuestion(self, line):
-        print(line)
         if "Tuiles" in line:
             elem = line.replace("[","")
             elem = elem.replace(",","")
