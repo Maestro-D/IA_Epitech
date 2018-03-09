@@ -1,6 +1,7 @@
 from random import shuffle,randrange
 import parser as p
 from time import sleep
+import parser as p
 
 permanents, deux, avant, apres = {'rose'}, {'rouge','gris','bleu'}, {'violet','marron'}, {'noir','blanc'}
 couleurs = avant | permanents | apres | deux
@@ -14,22 +15,33 @@ class personnage:
         susp = "-suspect" if self.suspect else "-clean"
         return self.couleur + "-" + str(self.position) + susp
 
+
+def ia_main(q):
+    writeRep(randrange(6))
+    print(q)
+
+def writeRep(reponse):
+    rf = open('./0/reponses.txt','w')
+    rf.write(str(reponse))
+    rf.close()
+
 def lancer():
     fini = False
+    parser = p.parser()
     old_question = ""
     parser = p.parse()
     while not fini:
         qf = open('./0/questions.txt','r')
         question = qf.read()
+        q = parser.parseQuestion(question)
         qf.close()
         if question != old_question :
-            rf = open('./0/reponses.txt','w')
-            rf.write(str(randrange(2)))
-            rf.close()
-            old_question = question()
+            ia_main(q)
+            old_question = question
         infof = open('./0/infos.txt','r')
         lines = infof.readlines()
+        parser.parseInfo(lines)
         infof.close()
         if len(lines) > 0:
             fini = "Score final" in lines[-1]
-    print("partie finie")
+        print("partie finie")
