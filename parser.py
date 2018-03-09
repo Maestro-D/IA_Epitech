@@ -28,25 +28,38 @@ class parser:
                     if c in info:
                         self.tuiles_dispos.append(self.getPersonnage(c))
             return "tuiles"
+        if "pouvoir" in line:
+            return "pouvoir"
+        if "bloquer" in line:
+            return "bloquer"
+        if "sortie" in line:
+            return "sortie"
+        if "position" in line:
+            return "position"
+        if "échanger" in line:
+            return "echanger"
+        if "obscursir" in line:
+            return "obscursir"
 
-    def parseInfo(self, line):
-        if "QUESTION" in line or "REPONSE" in line:
-            return
-        infos = line.split(" ")
-        for info in infos:
-            if "Score" in info:
-                elem = re.split(":|/", info)
-                self.score = int(elem[1])
-            elif "Ombre" in info:
-                elem = info.replace("Ombre", "")
-                elem = elem.replace(":","")
-                elem = elem.replace(",","")
-                self.shadow = int(elem)
-            for c in couleurs:
-                if c in info:
-                    details = info.split("-")
-                    if len(details) == 3:
-                        self.setPosition(c, int(details[1]))
+    def parseInfo(self, lines):
+        for line in lines:
+            if "QUESTION" in line or "REPONSE" in line:
+                break
+            infos = line.split(" ")
+            for info in infos:
+                if "Score" in info:
+                    elem = re.split(":|/", info)
+                    self.score = int(elem[1])
+                elif "Ombre" in info:
+                    elem = info.replace("Ombre", "")
+                    elem = elem.replace(":","")
+                    elem = elem.replace(",","")
+                    self.shadow = int(elem)
+                for c in couleurs:
+                    if c in info:
+                        details = info.split("-")
+                        if len(details) == 3:
+                            self.setPosition(c, int(details[1]))
 
 
 
