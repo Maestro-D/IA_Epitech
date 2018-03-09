@@ -17,7 +17,7 @@ class personnage:
 
 
 class iaInspecteur:
-    def __init__(self,question):
+    def __init__(self):
         self.question = ""
 
     def choosePersonnage(self):
@@ -44,17 +44,19 @@ class iaInspecteur:
         print("f")
         return
 
-    def prepareAnswer(self):
-        actions = {"tuile": self.choosePersonnage,
+    def prepareAnswer(self, question):
+        question
+        print(question)
+        actions = {"tuiles": self.choosePersonnage,
                     "pouvoir": self.activatePouvoir,
                     "bloquer": self.bloqueChemin,
                     "sortie": self.bloqueChemin,
-                    "positions": self.movePersonnage,
+                    "position": self.movePersonnage,
                     "echanger": self.swapPersonnage,
                     "obscurcir": self.shadow,
         }
         try:
-            actions[self.question]()
+            actions[question]()
         except:
             pass
 
@@ -69,14 +71,16 @@ def writeRep(reponse):
 def lancer():
     fini = False
     parser = p.parser()
+    ia = iaInspecteur()
     old_question = ""
     while not fini:
         qf = open('./0/questions.txt','r')
         question = qf.read()
+        print(question)
         q = parser.parseQuestion(question)
         qf.close()
         if question != old_question :
-            ia_main(q)
+            ia.prepareAnswer(q)
             old_question = question
         infof = open('./0/infos.txt','r')
         lines = infof.readlines()
@@ -84,4 +88,10 @@ def lancer():
         infof.close()
         if len(lines) > 0:
             fini = "Score final" in lines[-1]
+    qf = open('./0/questions.txt', 'r+')
+    qf.truncate()
+    qf.close()
+    infof = open('./0/infos.txt', 'r+')
+    infof.truncate()
+    infof.close()
     print("partie finie")
