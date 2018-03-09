@@ -79,4 +79,6 @@ class parser:
         for p in self.personnage:
             if p.couleur == couleur:
                 return p
+    def getTuiles(self):
+        return self.tuiles_dispo
 
