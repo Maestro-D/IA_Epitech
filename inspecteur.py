@@ -16,8 +16,50 @@ class personnage:
         return self.couleur + "-" + str(self.position) + susp
 
 
-def ia_main(q):
-    writeRep(randrange(6))
+class iaInspecteur:
+    def __init__(self,question):
+        self.question = ""
+
+    def choosePersonnage(self):
+        print("a")
+        return
+
+    def activatePouvoir(self):
+        print("b")
+        return
+
+    def bloqueChemin(self):
+        print("c")
+        return
+
+    def movePersonnage(self):
+        print("d")
+        return
+
+    def swapPersonnage(self):
+        print("e")
+        return
+
+    def shadow(self):
+        print("f")
+        return
+
+    def prepareAnswer(self):
+        actions = {"tuile": self.choosePersonnage,
+                    "pouvoir": self.activatePouvoir,
+                    "bloquer": self.bloqueChemin,
+                    "sortie": self.bloqueChemin,
+                    "positions": self.movePersonnage,
+                    "echanger": self.swapPersonnage,
+                    "obscurcir": self.shadow,
+        }
+        try:
+            actions[self.question]()
+        except:
+            pass
+
+
+
 
 def writeRep(reponse):
     rf = open('./0/reponses.txt','w')
