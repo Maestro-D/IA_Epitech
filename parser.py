@@ -10,7 +10,8 @@ class personnage:
         return self.couleur + "-" + str(self.position) + susp
 
 class parser:
-    def __init__(self):
+    def __init__(self, joueur):
+        self.joueur = joueur
         self.personnage = {personnage(c) for c in couleurs}
         self.lines = ""
         self.score = 4
@@ -23,6 +24,7 @@ class parser:
             elem = line.replace("[","")
             elem = elem.replace(",","")
             infos = elem.split(" ")
+            self.tuiles_dispo = []
             for info in infos:
                 for c in couleurs:
                     if c in info:
@@ -38,16 +40,16 @@ class parser:
             return "position"
         if "échanger" in line:
             return "echanger"
-        if "obscursir" in line:
-            return "obscursir"
+        if "obscurcir" in line:
+            return "obscurcir"
 
     def parseInfo(self, lines):
         for line in lines:
             if "QUESTION" in line or "REPONSE" in line:
-                break
+                continue
             infos = line.split(" ")
             for info in infos:
-                if "Score" in info:
+                if "Score" in info and "final" not in line:
                     elem = re.split(":|/", info)
                     self.score = int(elem[1])
                 elif "Ombre" in info:
@@ -56,6 +58,7 @@ class parser:
                     elem = elem.replace(",","")
                     self.shadow = int(elem)
                 for c in couleurs:
+                    #print(line)
                     if c in info:
                         details = info.split("-")
                         if len(details) == 3:
@@ -69,6 +72,7 @@ class parser:
                 return p.suspect
     def setPosition(self, couleur, position):
         for p in self.personnage:
+            #print(p)
             if p.couleur == couleur:
                 p.position = position
     def getPosition(self, couleur):
@@ -79,6 +83,16 @@ class parser:
         for p in self.personnage:
             if p.couleur == couleur:
                 return p
+    def getAllPersonnage(self):
+        allPerso = []
+        for p in self.personnage:
+            allPerso.append(p)
+        return allPerso
     def getTuiles(self):
         return self.tuiles_dispo
-
+    def getPersonnageWithHim(self, perso):
+        groupPerso = []
+        for p in self.personnage:
+            if perso.position == p.position and perso.couleur != p.couleur:
+                groupPerso.append(p)
+        return groupPerso

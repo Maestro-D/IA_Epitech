@@ -149,7 +149,7 @@ class ia:
 
 def lancer():
     fini = False
-    parser = p.parser()
+    parser = p.parser(1)
     fantome = ia(parser)
     old_question = ""
     while not fini:
