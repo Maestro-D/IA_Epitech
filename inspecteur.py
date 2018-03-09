@@ -21,32 +21,32 @@ class iaInspecteur:
         self.question = ""
 
     def choosePersonnage(self):
-        print("a")
+        #print("a")
         return
 
     def activatePouvoir(self):
-        print("b")
+        #print("b")
         return
 
     def bloqueChemin(self):
-        print("c")
+        #print("c")
         return
 
     def movePersonnage(self):
-        print("d")
+        #print("d")
         return
 
     def swapPersonnage(self):
-        print("e")
+        #print("e")
         return
 
     def shadow(self):
-        print("f")
+        #print("f")
         return
 
     def prepareAnswer(self, question):
         question
-        print(question)
+        #print(question)
         actions = {"tuiles": self.choosePersonnage,
                     "pouvoir": self.activatePouvoir,
                     "bloquer": self.bloqueChemin,
@@ -76,7 +76,7 @@ def lancer():
     while not fini:
         qf = open('./0/questions.txt','r')
         question = qf.read()
-        print(question)
+        #print(question)
         q = parser.parseQuestion(question)
         qf.close()
         if question != old_question :
