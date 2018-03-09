@@ -19,6 +19,7 @@ class parser:
         self.tuiles_dispo = []
 
     def parseQuestion(self, line):
+        print(line)
         if "Tuiles" in line:
             elem = line.replace("[","")
             elem = elem.replace(",","")
@@ -26,7 +27,7 @@ class parser:
             for info in infos:
                 for c in couleurs:
                     if c in info:
-                        self.tuiles_dispos.append(self.getPersonnage(c))
+                        self.tuiles_dispo.append(self.getPersonnage(c))
             return "tuiles"
         if "pouvoir" in line:
             return "pouvoir"

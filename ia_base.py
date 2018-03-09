@@ -1,4 +1,5 @@
 from random import shuffle,randrange
+import parser as p
 
 permanents, deux, avant, apres = {'rose'}, {'rouge','gris','bleu'}, {'violet','marron'}, {'noir','blanc'}
 couleurs = avant | permanents | apres | deux
@@ -88,8 +89,9 @@ class joueur:
                 q.position = x
                 informer("NOUVEAU PLACEMENT : "+str(q))
 
-def ia_main():
+def ia_main(q):
     writeRep(randrange(6))
+    print(q)
 
 def writeRep(reponse):
     rf = open('./1/reponses.txt','w')
@@ -98,16 +100,19 @@ def writeRep(reponse):
 
 def lancer():
     fini = False
+    parser = p.parser()
     old_question = ""
     while not fini:
         qf = open('./1/questions.txt','r')
         question = qf.read()
+        q = parser.parseQuestion(question)
         qf.close()
         if question != old_question :
-            ia_main()
+            ia_main(q)
             old_question = question
         infof = open('./1/infos.txt','r')
         lines = infof.readlines()
+        parser.parseInfo(lines)
         infof.close()
         if len(lines) > 0:
             fini = "Score final" in lines[-1]
