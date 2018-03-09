@@ -91,7 +91,6 @@ class joueur:
 
 def ia_main(q):
     writeRep(randrange(6))
-    print(q)
 
 def writeRep(reponse):
     rf = open('./1/reponses.txt','w')

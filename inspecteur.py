@@ -18,7 +18,6 @@ class personnage:
 
 def ia_main(q):
     writeRep(randrange(6))
-    print(q)
 
 def writeRep(reponse):
     rf = open('./0/reponses.txt','w')
