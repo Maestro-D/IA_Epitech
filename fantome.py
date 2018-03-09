@@ -89,25 +89,77 @@ class joueur:
                 q.position = x
                 informer("NOUVEAU PLACEMENT : "+str(q))
 
-def ia_main(q):
-    writeRep(randrange(6))
+class personnage:
+    def __init__(self,couleur):
+        self.couleur, self.suspect, self.position, self.pouvoir = couleur, True, 0, True
+    def __repr__(self):
+        susp = "-suspect" if self.suspect else "-clean"
+        return self.couleur + "-" + str(self.position) + susp
 
-def writeRep(reponse):
-    rf = open('./1/reponses.txt','w')
-    rf.write(str(reponse))
-    rf.close()
+class ia:
+    def __init__(self, parser):
+        self.parser = parser
+        self.currentPerso = personnage("rose")
+        self.bloque = {}
+
+    def ia_main(self, q):
+        self.writeRep(randrange(6))
+        if q == "tuiles":
+            self.choicePerso(self.parser.getTuiles())
+        elif q == "pouvoir":
+            self.activatePower()
+        elif q == "bloquer":
+            self.closePath()
+        elif q == "sortie":
+            self.closeExit()
+        elif q == "position":
+            self.move()
+        elif q == "echanger":
+            self.choiceChange()
+        elif q == "obscurcir":
+            self.makeNight()
+        else:
+            return
+    
+    def choicePerso(self, listeTuile):
+        print("CHOICE PERSO")
+
+    def activatePower(self):
+        print("POWER")
+
+    def closePath(self):
+        print("CLOSE PATH")
+
+    def closeExit(self):
+        print("CLOSE EXIT")
+
+    def move(self):
+        print("MOVE")
+
+    def choiceChange(self):
+        print("CHANGE")
+
+    def makeNight(self):
+        print("NIGHT SHALL FALL")
+
+    def writeRep(self, reponse):
+        rf = open('./1/reponses.txt','w')
+        rf.write(str(reponse))
+        rf.close()
 
 def lancer():
     fini = False
     parser = p.parser()
+    fantome = ia(parser)
     old_question = ""
     while not fini:
         qf = open('./1/questions.txt','r')
         question = qf.read()
+        print(question)
         q = parser.parseQuestion(question)
         qf.close()
         if question != old_question :
-            ia_main(q)
+            fantome.ia_main(q)
             old_question = question
         infof = open('./1/infos.txt','r')
         lines = infof.readlines()
@@ -115,3 +167,9 @@ def lancer():
         infof.close()
         if len(lines) > 0:
             fini = "Score final" in lines[-1]
+    qf = open('./1/questions.txt','r+')
+    qf.truncate()
+    qf.close()
+    infof = open('./1/infos.txt','r+')
+    infof.truncate
+    infof.close()
