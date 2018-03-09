@@ -29,7 +29,6 @@ def lancer():
     fini = False
     parser = p.parser()
     old_question = ""
-    parser = p.parse()
     while not fini:
         qf = open('./0/questions.txt','r')
         question = qf.read()
