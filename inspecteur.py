@@ -1,4 +1,5 @@
 from random import shuffle,randrange
+import parser as p
 from time import sleep
 
 permanents, deux, avant, apres = {'rose'}, {'rouge','gris','bleu'}, {'violet','marron'}, {'noir','blanc'}
@@ -16,6 +17,7 @@ class personnage:
 def lancer():
     fini = False
     old_question = ""
+    parser = p.parse()
     while not fini:
         qf = open('./0/questions.txt','r')
         question = qf.read()
