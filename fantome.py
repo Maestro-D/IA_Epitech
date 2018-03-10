@@ -43,7 +43,9 @@ class ia:
     
     def choicePerso(self, listeTuile):
         print("CHOICE PERSO")
+        print("\nSIMULATION START\n")
         persoBM = self.simulate(listeTuile, self.parser.personnage)
+        print("\nSIMULATION END\n")
         tmp = 0
         for p in listeTuile:
             if p.couleur == persoBM.couleur:
@@ -55,7 +57,7 @@ class ia:
 
     def activatePower(self):
         print("POWER")
-
+        self.writeRep(0)
 
     def closePath(self):
         print("CLOSE PATH")
@@ -85,6 +87,11 @@ class ia:
             ret = self.moveIt(allPerso, _perso)
             mini = ret[0]
             passage = ret[1]
+            print("\n POUR CE PERSO : ")
+            print(_perso)
+            print(" son score de simulation est : ")
+            print(mini)
+            print("\n")
             if mini < miniBM:
                 miniBM = mini
                 self.passageBM = passage
