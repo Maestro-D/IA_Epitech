@@ -12,7 +12,7 @@ pass_ext = [{1,4},{0,2,5,7},{1,3,6},{2,7},{0,5,8,9},{4,6,1,8},{5,7,2,9},{3,6,9,1
 
 class iaInspecteur:
     def __init__(self, parser):
-        self.personnage = p.personnage
+        self.current_perso = p.personnage
         self.tuiles_dispo = []
         self.parser = parser
         self.nbSuspect = 8
@@ -32,7 +32,6 @@ class iaInspecteur:
             old_position = perso.position
             for pos in passages[perso.position]:
                 perso.position = pos
-                print("ee")
                 self.copy_map[perso.couleur].position = pos
                 self.tuiles_dispo.remove(perso)
                 beta = self.mini(depth)
@@ -60,7 +59,6 @@ class iaInspecteur:
                     alpha = beta
                 perso.position = old_position
                 self.copy_map[perso.couleur].position = old_position
-        print("max = " + beta)
         return beta
 
     def maxi(self, depth):
@@ -78,29 +76,32 @@ class iaInspecteur:
                     alpha = beta
                 perso.position = old_position
                 self.copy_map[perso.couleur].position = old_position
-        print("min = "+alpha)
         return alpha
 
     def eval(self):
         partition = [{p for p in self.copy_map if p.position == i} for i in range(10)]
         score = 0
         for piece,gens in enumerate(partition):
-            print("aa")
             if len(gens) == 1 or piece == self.shadow:
                 for p in gens:
                     score += 1
-                    print(score)
         return score
 
     def choosePersonnage(self):
         self.tuiles_dispo = self.parser.getTuiles()
         if len(self.tuiles_dispo) <= 3:
             self.play()
-            writeRep(self.tuiles_choose)
+            if self.tuile_choose in self.tuiles_dispo:
+                writeRep(self.tuile_choose)
+            else:
+                writeRep(self.tuiles_dispo[0])
+                self.tuile_choose = self.tuiles_dispo[0]
+                self.current_perso = self.parser.getPersonnage(self.tuiles_dispo)
         return
 
     def activatePouvoir(self):
-        #print("b")
+        if self.current_perso.couleur == "rouge":
+            writeRep("1")
         return
 
     def bloqueChemin(self):
