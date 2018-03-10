@@ -16,31 +16,87 @@ class iaInspecteur:
         self.tuiles_dispo = []
         self.parser = parser
         self.nbSuspect = 8
+        self.tuile_choose = 0
+        self.eval_salle = 0
+        self.new_salle = 0
+        self.copy_map = {}
 # self.first_turn = {"rose":0,"violet":,"rouge":8,"noir":,"blanc":,"gris":,"bleu":,"marron":,}
 
+
     def play(self):
-        max_val = -10000
-        status_map = self.parser.getAllPersonnage()
-        #print(self.tuiles_dispo)
+        alpha = -10000
+        depth = 2
+        index = 0
+        self.copy_map = self.parser.getAllPersonnage()
         for perso in self.tuiles_dispo:
+            old_position = perso.position
             for pos in passages[perso.position]:
-                break
-                #print(status_map[0])
-                #print(pos)
-                #print("a\n")
+                perso.position = pos
+                print("ee")
+                self.copy_map[perso.couleur].position = pos
+                self.tuiles_dispo.remove(perso)
+                beta = self.mini(depth)
+                if (beta >= alpha):
+                    alpha = beta
+                    self.tuile_choose = index
+                    self.new_salle = pos
+                perso.position = old_position
+                self.copy_map[perso.couleur].position = old_position
+                self.tuiles_dispo.insert(0, perso)
+            index += 1
 
+    def mini(self, depth):
+        if depth == 0:
+            return self.eval()
+        beta = 10000
+        for perso in self.tuiles_dispo:
+            old_position = perso.position
+            for pos in passages[perso.position]:
+                perso.position = pos
+                self.copy_map[perso.couleur].position = pos
+                self.tuiles_dispo.remove(perso)
+                alpha = self.maxi(depth - 1)
+                if beta < alpha:
+                    alpha = beta
+                perso.position = old_position
+                self.copy_map[perso.couleur].position = old_position
+        print("max = " + beta)
+        return beta
 
-    def min(depth):
-        max_val = -10000
+    def maxi(self, depth):
+        if depth == 0:
+            return self.eval()
+        alpha = -10000
+        for perso in self.tuiles_dispo:
+            old_position = perso.position
+            for pos in passages[perso.position]:
+                perso.position = pos
+                self.copy_map[perso.couleur].position = pos
+                self.tuiles_dispo.remove(perso)
+                beta = self.mini(depth - 1)
+                if beta > alpha:
+                    alpha = beta
+                perso.position = old_position
+                self.copy_map[perso.couleur].position = old_position
+        print("min = "+alpha)
+        return alpha
 
-        return
-
-    def max(depth):
-        return
+    def eval(self):
+        partition = [{p for p in self.copy_map if p.position == i} for i in range(10)]
+        score = 0
+        for piece,gens in enumerate(partition):
+            print("aa")
+            if len(gens) == 1 or piece == self.shadow:
+                for p in gens:
+                    score += 1
+                    print(score)
+        return score
 
     def choosePersonnage(self):
         self.tuiles_dispo = self.parser.getTuiles()
-        self.play()
+        if len(self.tuiles_dispo) <= 3:
+            self.play()
+            writeRep(self.tuiles_choose)
         return
 
     def activatePouvoir(self):
@@ -52,7 +108,7 @@ class iaInspecteur:
         return
 
     def movePersonnage(self):
-        #print("d")
+        writeRep(self.new_salle)
         return
 
     def swapPersonnage(self):

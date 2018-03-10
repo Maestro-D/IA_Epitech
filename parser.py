@@ -84,10 +84,10 @@ class parser:
             if p.couleur == couleur:
                 return p
     def getAllPersonnage(self):
-        allPerso = []
+        all_perso = {}
         for p in self.personnage:
-            allPerso.append(p)
-        return allPerso
+            all_perso[p.couleur]= p
+        return all_perso
     def getTuiles(self):
         return self.tuiles_dispo
     def getPersonnageWithHim(self, perso):
