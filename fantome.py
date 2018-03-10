@@ -43,7 +43,7 @@ class ia:
     
     def choicePerso(self, listeTuile):
         print("CHOICE PERSO")
-        persoBM = self.simulate(listeTuile, self.parser.getAllPersonnage())
+        persoBM = self.simulate(listeTuile, self.parser.personnage)
         tmp = 0
         for p in listeTuile:
             if p.couleur == persoBM.couleur:
@@ -101,7 +101,6 @@ class ia:
                 passBM = k
         return mini, passBM
                 
-
     def cptAlone(self, persos):
         carte = [0,0,0,0,0,0,0,0,0,0]
         score = 0
