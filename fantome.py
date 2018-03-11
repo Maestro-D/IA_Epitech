@@ -53,24 +53,28 @@ class ia:
         return tmp
 
     def activatePower(self):
-        print("POWER")
         self.writeRep(0)
 
     def closePath(self):
-        print("CLOSE PATH")
+        #print("CLOSE PATH")
+        return
 
     def closeExit(self):
-        print("CLOSE EXIT")
+        #print("CLOSE EXIT")
+        return
 
     def move(self):
-        print("MOVE")
+        #print("MOVE")
         self.writeRep(self.passageBM)
+        return
 
     def choiceChange(self):
-        print("CHANGE")
+        #print("CHANGE")
+        return
 
     def makeNight(self):
-        print("NIGHT SHALL FALL")
+        #print("NIGHT SHALL FALL")
+        return
 
     def writeRep(self, reponse):
         rf = open('./1/reponses.txt','w')
@@ -93,14 +97,17 @@ class ia:
     def moveIt(self, allPerso, perso):
         mini = 100
         tmpPosition = perso.position
-        for k in passages[perso.position]:
+        if perso.couleur != 'rose': 
+            myPass = passages[perso.position]
+        else:
+            myPass = pass_ext[perso.position]
+        for k in myPass:
             perso.position = k
             cpt = self.cptAlone(allPerso) 
             if cpt < mini:
                 mini = cpt
                 passBM = k
             perso.position = tmpPosition
-            
         return mini, passBM
 
     def cptAlone(self, persos):
@@ -139,3 +146,5 @@ def lancer():
     infof = open('./1/infos.txt','r+')
     infof.truncate
     infof.close()
+    if len(lines) > 0:
+            fini = "Score final" in lines[-1]

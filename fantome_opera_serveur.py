@@ -2,6 +2,7 @@ from random import shuffle,randrange
 from time import sleep
 from threading import Thread
 import inspecteur, fantome
+import dummy0, dummy1
 
 latence = 0.01
 permanents, deux, avant, apres = {'rose'}, {'rouge','gris','bleu'}, {'violet','marron'}, {'noir','blanc'}
@@ -169,7 +170,7 @@ class partie:
                     for p in gens:
                         p.suspect = False
         self.start += len([p for p in self.personnages if p.suspect])
-            
+
     def tour(self):
         informer("**************************\n" + str(self))
         self.actions()
@@ -182,10 +183,25 @@ class partie:
             self.tour()
         informer("L'enquêteur a trouvé - c'était " + str(self.fantome) if self.start < self.end else "Le fantôme a gagné")
         informer("Score final : "+str(self.end-self.start))
+        return self.end-self.start
     def __repr__(self):
         return "Tour:" + str(self.num_tour) + ", Score:"+str(self.start)+"/"+str(self.end) + ", Ombre:" + str(self.shadow) + ", Bloque:" + str(self.bloque) +"\n" + "  ".join([str(p) for p in self.personnages])
 
+#joueurs = [joueur(0),joueur(1)]
+#Thread(target=inspecteur.lancer).start()
+#Thread(target=fantome.lancer).start()
+#partie(joueurs).lancer()
+
+score = []
 joueurs = [joueur(0),joueur(1)]
-Thread(target=inspecteur.lancer).start()
-Thread(target=fantome.lancer).start()
-partie(joueurs).lancer()
+nbparties = 100
+for i in range(nbparties):
+    t1,t2 = Thread(target=inspecteur.lancer), Thread(target=fantome.lancer)
+    t1.start()
+    t2.start()
+    score.append(partie(joueurs).lancer())
+    t1.join()
+    t2.join()
+print(score)
+victoires = [x for x in score if x<=0]
+print("Efficacité : "+str(len(victoires)/nbparties*100)+"%")
