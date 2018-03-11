@@ -20,29 +20,30 @@ class iaInspecteur:
         self.eval_salle = 0
         self.new_salle = 0
         self.copy_map = {}
-# self.first_turn = {"rose":0,"violet":,"rouge":8,"noir":,"blanc":,"gris":,"bleu":,"marron":,}
 
 
     def play(self):
         alpha = -10000
-        depth = 2
-        index = 0
+        depth = 1
         self.copy_map = self.parser.getAllPersonnage()
         for perso in self.tuiles_dispo:
             old_position = perso.position
+            index = 0
             for pos in passages[perso.position]:
                 perso.position = pos
                 self.copy_map[perso.couleur].position = pos
                 self.tuiles_dispo.remove(perso)
                 beta = self.mini(depth)
-                if (beta >= alpha):
+                if beta >= alpha:
+                    print("eee")
                     alpha = beta
                     self.tuile_choose = index
+                    print(self.tuile_choose)
                     self.new_salle = pos
                 perso.position = old_position
                 self.copy_map[perso.couleur].position = old_position
                 self.tuiles_dispo.insert(0, perso)
-            index += 1
+                index += 1
 
     def mini(self, depth):
         if depth == 0:
@@ -89,14 +90,11 @@ class iaInspecteur:
 
     def choosePersonnage(self):
         self.tuiles_dispo = self.parser.getTuiles()
-        if len(self.tuiles_dispo) <= 3:
+        if len(self.tuiles_dispo) <= 2:
             self.play()
-            if self.tuile_choose in self.tuiles_dispo:
-                writeRep(self.tuile_choose)
-            else:
-                writeRep(self.tuiles_dispo[0])
-                self.tuile_choose = self.tuiles_dispo[0]
-                self.current_perso = self.parser.getPersonnage(self.tuiles_dispo)
+            writeRep(self.tuile_choose)
+            print(self.tuile_choose)
+        writeRep("0")
         return
 
     def activatePouvoir(self):
