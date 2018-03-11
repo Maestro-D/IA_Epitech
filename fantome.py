@@ -42,10 +42,7 @@ class ia:
             return
     
     def choicePerso(self, listeTuile):
-        print("CHOICE PERSO")
-        print("\nSIMULATION START\n")
         persoBM = self.simulate(listeTuile, self.parser.personnage)
-        print("\nSIMULATION END\n")
         tmp = 0
         for p in listeTuile:
             if p.couleur == persoBM.couleur:
@@ -87,11 +84,6 @@ class ia:
             ret = self.moveIt(allPerso, _perso)
             mini = ret[0]
             passage = ret[1]
-            print("\n POUR CE PERSO : ")
-            print(_perso)
-            print(" son score de simulation est : ")
-            print(mini)
-            print("\n")
             if mini < miniBM:
                 miniBM = mini
                 self.passageBM = passage
@@ -100,14 +92,17 @@ class ia:
 
     def moveIt(self, allPerso, perso):
         mini = 100
+        tmpPosition = perso.position
         for k in passages[perso.position]:
             perso.position = k
             cpt = self.cptAlone(allPerso) 
             if cpt < mini:
                 mini = cpt
                 passBM = k
+            perso.position = tmpPosition
+            
         return mini, passBM
-                
+
     def cptAlone(self, persos):
         carte = [0,0,0,0,0,0,0,0,0,0]
         score = 0
