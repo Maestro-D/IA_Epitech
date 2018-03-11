@@ -35,10 +35,8 @@ class iaInspecteur:
                 self.tuiles_dispo.remove(perso)
                 beta = self.mini(depth)
                 if beta >= alpha:
-                    print("eee")
                     alpha = beta
                     self.tuile_choose = index
-                    print(self.tuile_choose)
                     self.new_salle = pos
                 perso.position = old_position
                 self.copy_map[perso.couleur].position = old_position
@@ -93,7 +91,6 @@ class iaInspecteur:
         if len(self.tuiles_dispo) <= 2:
             self.play()
             writeRep(self.tuile_choose)
-            print(self.tuile_choose)
         writeRep("0")
         return
 
